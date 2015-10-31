@@ -31,7 +31,7 @@ module PigeonBand
 
 private
 
-  def formatted_year(band, year)
+  def self.formatted_year(band, year)
     msg = "invalid year '#{year}' in pigeon band '#{band}'"
     raise msg unless year.match(/^\d/)
     year = year.to_i
