@@ -34,8 +34,9 @@ private
   def formatted_year(band, year)
     msg = "invalid year '#{year}' in pigeon band '#{band}'"
     raise msg unless year.match(/^\d/)
-    return 2000 + year if year in  0..59
-    return 1900 + year if year in 60..99
+    year = year.to_i
+    return 2000 + year if year >=  0 and year <= 59
+    return 1900 + year if year >= 60 and year <= 99
     raise msg
   end
 end
