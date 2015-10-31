@@ -12,21 +12,24 @@ module PigeonBand
         sequ = list[2].to_i
         band = sprintf("B-%02d-%07d", year % 100, sequ)
         slug = band
+        code = 'BE'
       when 'DV'
         club = list[1].to_i
         year = formatted_year(band, list[2])
         sequ = list[3].to_i
         band = sprintf("DV-0%d-%02d-%d", club, year % 100, sequ)
         slug = sprintf("DV-%05d-%02d-%04d", club, year % 100, sequ)
+        code = 'DE'
       when 'NL'
         year = list[1].to_i
         sequ = list[2].to_i
         band = sprintf("NL-%02d-%07d", year % 100, sequ)
         slug = band
+        code = 'NL'
       else
         raise "Please add more formats at https://github.com/volkerwiegand/pigeon_band"
     end
-    [band, slug, year]
+    [band, slug, year, code]
   end
 
 private
