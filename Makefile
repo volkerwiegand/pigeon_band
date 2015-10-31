@@ -9,15 +9,15 @@ all: build
 rel: build
 	vim lib/pigeon_band/version.rb
 	git commit -a
-	sudo gem uninstall pigeon_band --all
+	gem uninstall pigeon_band --all
 	rake release
 
 
 install: build
 	git commit -a
-	sudo gem uninstall pigeon_band --all
-	sudo rake install
-	sudo rm -rf pkg
+	gem uninstall pigeon_band --all
+	rake install
+	rm -rf pkg
 
 build:
 	git add lib
