@@ -29,7 +29,7 @@ module PigeonBand
       else
         raise "Please add more formats at https://github.com/volkerwiegand/pigeon_band"
     end
-    [band, slug, year, code]
+    { band: band, slug: slug, year: year, code: code }
   end
 
 private
