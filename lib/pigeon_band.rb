@@ -38,9 +38,11 @@ private
     msg = "invalid year '#{year}' in pigeon band '#{band}'"
     raise msg unless year.match(/^\d/)
     year = year.to_i
-    return 2000 + year if year >=  0 and year <= 59
-    return 1900 + year if year >= 60 and year <= 99
-    raise msg
+    msg = "year '#{year}' out of range in pigeon band '#{band}'"
+    raise msg if year < 0 or year > 99
+    year += 2000
+    year -= 100 if year > (Time.now.to_date.year + 5)
+    return year
   end
 end
 
