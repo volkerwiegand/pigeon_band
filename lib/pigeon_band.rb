@@ -1,28 +1,30 @@
 require "pigeon_band/version"
 
 module PigeonBand
-  def self.format(band, country = "DV")
+  def self.format(band, country = COUNTRY)
+    raise "missing input for pigeon band" if band.nil? or band == ""
+    band_msg = "in pigeon band '#{band}'"
     band.upcase!
     band.tr!('. /', '---')
     band = country + '-' + band unless band.match(/^[A-Z]/)
     list = band.split('-')
     case list[0]
       when 'B'
-        year = formatted_year(band, list[1])
-        sequ = list[2].to_i
+        year = get_year(band, list[1], band_msg)
+        sequ = get_number(band, list[2], "counter", 1, 9999999, band_msg)
         band = sprintf("B-%02d-%07d", year % 100, sequ)
         slug = band
         code = 'BE'
       when 'DV'
-        club = list[1].to_i
-        year = formatted_year(band, list[2])
-        sequ = list[3].to_i
+        club = get_number(band, list[1], "club", 1, 9999, band_msg)
+        year = get_year(band, list[2], band_msg)
+        sequ = get_number(band, list[3], "counter", 1, 9999, band_msg)
         band = sprintf("DV-0%d-%02d-%d", club, year % 100, sequ)
         slug = sprintf("DV-%05d-%02d-%04d", club, year % 100, sequ)
         code = 'DE'
       when 'NL'
-        year = list[1].to_i
-        sequ = list[2].to_i
+        year = get_year(band, list[1], band_msg)
+        sequ = get_number(band, list[2], "counter", 1, 9999999, band_msg)
         band = sprintf("NL-%02d-%07d", year % 100, sequ)
         slug = band
         code = 'NL'
@@ -34,15 +36,23 @@ module PigeonBand
 
 private
 
-  def self.formatted_year(band, year)
-    msg = "invalid year '#{year}' in pigeon band '#{band}'"
-    raise msg unless year.match(/^\d/)
+  def self.get_year(band, year, band_msg)
+    raise "missing year #{band_msg}" if year.nil? or year == ""
+    raise "invalid year '#{year}' #{band_msg}" unless year.match(/^\d/)
     year = year.to_i
-    msg = "year '#{year}' out of range in pigeon band '#{band}'"
-    raise msg if year < 0 or year > 99
+    raise "year '#{year}' out of range #{band_msg}" if year < 0 or year > 99
     year += 2000
     year -= 100 if year > (Time.now.to_date.year + 5)
     return year
+  end
+
+  def self.get_number(band, num, num_type, min_num, max_num, band_msg)
+    raise "missing #{num_type} #{band_msg}" if num.nil? or num == ""
+    raise "invalid #{num_type} '#{num}' #{band_msg}" unless num.match(/^\d/)
+    num = num.to_i
+    raise "#{num_type} '#{num}' too small #{band_msg}" if num < min_num
+    raise "#{num_type} '#{num}' too big #{band_msg}"   if num > max_num
+    return num
   end
 end
 

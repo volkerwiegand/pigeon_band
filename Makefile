@@ -21,4 +21,5 @@ install: build
 
 build:
 	git add lib
+	git add test
 
