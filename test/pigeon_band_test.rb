@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class PigeonBandTest < Minitest::Test
+class PigeonBandGermanyTest < Minitest::Test
   def test_that_it_has_a_version_number
     refute_nil ::PigeonBand::VERSION
   end
@@ -10,8 +10,8 @@ class PigeonBandTest < Minitest::Test
   end
 
   def test_that_it_refuses_blank_input
-    # TODO
-    assert true
+    exception = assert_raises(RuntimeError) { PigeonBand.format("") }
+    assert_match /missing input/, exception.message
   end
 
   # Caution: the following tests assume DV as default country
