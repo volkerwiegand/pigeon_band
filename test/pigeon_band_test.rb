@@ -9,19 +9,40 @@ class PigeonBandGermanyTest < Minitest::Test
     refute_nil ::PigeonBand::COUNTRY
   end
 
+  def test_that_the_homepage_is_defined
+    refute_nil ::PigeonBand::HOMEPAGE
+  end
+
+  def test_that_it_refuses_nil_input
+    hash = PigeonBand.format("")
+    assert_match /missing input/i, hash[:error]
+  end
+
   def test_that_it_refuses_blank_input
-    exception = assert_raises(RuntimeError) { PigeonBand.format("") }
-    assert_match /missing input/, exception.message
+    hash = PigeonBand.format("")
+    assert_match /missing input/i, hash[:error]
+  end
+
+  def test_that_it_refuses_space_input
+    hash = PigeonBand.format("  ")
+    assert_match /missing input/i, hash[:error]
+  end
+
+  def test_that_it_refuses_invalid_country
+    hash = PigeonBand.format("XX-1")
+    assert_match /unknown country/i, hash[:error]
   end
 
   # Caution: the following tests assume DV as default country
-  def test_that_it_adds_default_country
+  def test_that_it_adds_the_default_country
     hash = PigeonBand.format("1-1-1")
     assert_equal "DE", hash[:code]
   end
 
-  def test_that_it_keeps_country
+  def test_that_it_keeps_the_country
     hash = PigeonBand.format("B-1-1")
     assert_equal "BE", hash[:code]
   end
 end
+
+# vim: set et ts=2 sw=2 ai:

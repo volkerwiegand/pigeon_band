@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["volker.wiegand@cvw.de"]
   spec.summary       = %q{Pigeon band formatter}
   spec.description   = %q{Format year and collation sequence for pigeon bands of various countries}
-  spec.homepage      = "https://github.com/volkerwiegand/pigeon_band"
+  spec.homepage      = PigeonBand::HOMEPAGE
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }

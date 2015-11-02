@@ -35,12 +35,7 @@ above bands a input, a call to PigeonBand#format would return the following hash
 
 ```ruby
 PigeonBand.format("DV-06914-12-479")
-  {
-    band: "DV-06914-12-479"
-    slug: "DV-06914-12-0479"
-    year: 2012
-    code: "DE"
-  }
+  { band: "DV-06914-12-479" coll: "DV-06914-12-0479" year: 2012 code: "DE" }
 ```
 ## Development
 
