@@ -22,4 +22,5 @@ install: build
 build:
 	git add lib
 	git add test
+	rake test
 

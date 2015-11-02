@@ -30,12 +30,23 @@ Or install it yourself as:
 ## Usage
 
 After loading the pigeon_band gem, there is a new object PigeonBand with one method #format.
-Given a band as a string, it returns a hash consisting of four fields. Thus, giben the
+Given a band as a string, it returns a hash consisting of five fields. Thus, given the
 above bands a input, a call to PigeonBand#format would return the following hashes:
+
+* band
+    * The normalized band as it should be displayed
+* coll
+    * The band formatted for easy collation (filled e.g. with leading spaces)
+* year
+    * The (four-digit) year as extracted from the band
+* code
+    * The (ISO3166-1) country code as extracted from the band
+* error
+    * The error message if the band is invalid, otherwise nil
 
 ```ruby
 PigeonBand.format("DV-06914-12-479")
-  { band: "DV-06914-12-479" coll: "DV-06914-12-0479" year: 2012 code: "DE" }
+  { band: "DV-06914-12-479" coll: "DV-06914-12-0479" year: 2012 code: "DE"  error: nil }
 ```
 ## Development
 
