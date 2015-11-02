@@ -32,6 +32,10 @@ Or install it yourself as:
 After loading the pigeon_band gem, there is a new object PigeonBand with one method #format.
 Given a band as a string, it returns a hash consisting of five fields.
 
+Please note that the input is normalized before being scanned. Any '/' (slash), '.' (dot),
+'-' (dash) or ' ' (space) is converted to a '-' (dash). If the input does nor start with a letter
+a default of DV is added. Alternatively, a second argument can be added to calling #format.
+
 * band
     * The normalized band as it should be displayed
 * coll
@@ -51,6 +55,21 @@ PigeonBand.format("DV-06914-12-479")
 
 PigeonBand.format("DV-099-09-850")
   { band: "DV-099-09-850", coll: "DV-00099-09-0850", year: 2009, code: "DE", error: nil }
+
+PigeonBand.format("B-08-2148152")
+  { band: "B-08-2148152", coll: "B-08-2148152", year: 2008, code: "BE", error: nil }
+
+PigeonBand.format("8.2148152", "B")
+  { band: "B-08-2148152", coll: "B-08-2148152", year: 2008, code: "BE", error: nil }
+
+PigeonBand.format("1 1 1")
+  { band: "DV-01-01-1", coll: "DV-00001-01-0001", year: 201, code: "DE", error: nil }
+
+PigeonBand.format("")
+  { band: nil, coll: nil, year: nil, code: nil, error: "input_missing" }
+
+PigeonBand.format("XX-1")
+  { band: nil, coll: nil, year: nil, code: nil, error: "country_unknown" }
 ```
 
 ## Error messages
@@ -65,20 +84,26 @@ The following error messages are sent when the corresponding error is detected:
     * You can help improving this gem by contributing it :-)
     * See below for details.
 
+* year_missing
+    * The year is missing for this country.
+
+* year_invalid
+    * The year is invalid (i.e. not a number).
+
 * year_range
-    * The given year is outside the valid range of 00 to 99
+    * The given year is outside the valid range of 0 to 99.
 
 * club_below
-    * The given club (for countries with club numbers) is too low
+    * The given club (for countries with club numbers) is too low.
 
 * club_above
-    * The given club (for countries with club numbers) is too high
+    * The given club (for countries with club numbers) is too high.
 
 * sequ_below
-    * The given running number is too low
+    * The given running number is too low.
 
 * sequ_above
-    * The given running number is too high
+    * The given running number is too high.
 
 ## Complete Rails example
 
