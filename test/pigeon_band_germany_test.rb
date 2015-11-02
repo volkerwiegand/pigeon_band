@@ -43,27 +43,27 @@ class PigeonBandGermanyTest < Minitest::Test
 
   def test_that_dv_year_100_is_too_big
     hash = PigeonBand.format("DV-1-100-1")
-    assert_match /out of range/i, hash[:error]
+    assert_equal "year_range", hash[:error]
   end
 
   def test_that_dv_refuses_club_0
     hash = PigeonBand.format("DV-0-0-1")
-    assert_match /too small/i, hash[:error]
+    assert_equal "club_below", hash[:error]
   end
 
   def test_that_dv_refuses_club_10000
     hash = PigeonBand.format("DV-10000-0-1")
-    assert_match /too big/i, hash[:error]
+    assert_equal "club_above", hash[:error]
   end
 
   def test_that_dv_refuses_sequ_0
     hash = PigeonBand.format("DV-1-0-0")
-    assert_match /too small/i, hash[:error]
+    assert_equal "sequ_below", hash[:error]
   end
 
   def test_that_dv_refuses_sequ_10000
     hash = PigeonBand.format("DV-1-0-10000")
-    assert_match /too big/i, hash[:error]
+    assert_equal "sequ_above", hash[:error]
   end
 end
 

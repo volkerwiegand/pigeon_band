@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class PigeonBandGermanyTest < Minitest::Test
+class PigeonBandTest < Minitest::Test
   def test_that_it_has_a_version_number
     refute_nil ::PigeonBand::VERSION
   end
@@ -15,22 +15,22 @@ class PigeonBandGermanyTest < Minitest::Test
 
   def test_that_it_refuses_nil_input
     hash = PigeonBand.format("")
-    assert_match /missing input/i, hash[:error]
+    assert_equal "input_missing", hash[:error]
   end
 
   def test_that_it_refuses_blank_input
     hash = PigeonBand.format("")
-    assert_match /missing input/i, hash[:error]
+    assert_equal "input_missing", hash[:error]
   end
 
   def test_that_it_refuses_space_input
     hash = PigeonBand.format("  ")
-    assert_match /missing input/i, hash[:error]
+    assert_equal "input_missing", hash[:error]
   end
 
   def test_that_it_refuses_invalid_country
     hash = PigeonBand.format("XX-1")
-    assert_match /unknown country/i, hash[:error]
+    assert_equal "country_unknown", hash[:error]
   end
 
   # Caution: the following tests assume DV as default country
@@ -40,7 +40,7 @@ class PigeonBandGermanyTest < Minitest::Test
   end
 
   def test_that_it_keeps_the_country
-    hash = PigeonBand.format("B-1-1")
+    hash = PigeonBand.format("B-1-1000001")
     assert_equal "BE", hash[:code]
   end
 end

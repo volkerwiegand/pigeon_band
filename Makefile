@@ -19,8 +19,13 @@ install: build
 	rake install
 	rm -rf pkg
 
+update: build
+	gem uninstall pigeon_band --all
+	rake install
+
 build:
 	git add lib
 	git add test
 	rake test
+	vim README.md
 

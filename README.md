@@ -30,8 +30,7 @@ Or install it yourself as:
 ## Usage
 
 After loading the pigeon_band gem, there is a new object PigeonBand with one method #format.
-Given a band as a string, it returns a hash consisting of five fields. Thus, given the
-above bands a input, a call to PigeonBand#format would return the following hashes:
+Given a band as a string, it returns a hash consisting of five fields.
 
 * band
     * The normalized band as it should be displayed
@@ -44,10 +43,47 @@ above bands a input, a call to PigeonBand#format would return the following hash
 * error
     * The error message if the band is invalid, otherwise nil
 
+Given the above bands a input, a call to PigeonBand#format would return the following hashes:
+
 ```ruby
 PigeonBand.format("DV-06914-12-479")
-  { band: "DV-06914-12-479" coll: "DV-06914-12-0479" year: 2012 code: "DE"  error: nil }
+  { band: "DV-06914-12-479", coll: "DV-06914-12-0479", year: 2012, code: "DE", error: nil }
+
+PigeonBand.format("DV-099-09-850")
+  { band: "DV-099-09-850", coll: "DV-00099-09-0850", year: 2009, code: "DE", error: nil }
 ```
+
+## Error messages
+
+The following error messages are sent when the corresponding error is detected:
+
+* input_missing
+    * The input is blank or consists entirely of white space.
+
+* country_unknown
+    * The given country was not recognized.
+    * You can help improving this gem by contributing it :-)
+    * See below for details.
+
+* year_range
+    * The given year is outside the valid range of 00 to 99
+
+* club_below
+    * The given club (for countries with club numbers) is too low
+
+* club_above
+    * The given club (for countries with club numbers) is too high
+
+* sequ_below
+    * The given running number is too low
+
+* sequ_above
+    * The given running number is too high
+
+## Complete Rails example
+
+TODO: show model, controller, view, route and locale data
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
